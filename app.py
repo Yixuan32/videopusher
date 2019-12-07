@@ -24,7 +24,7 @@ def connect_db():
     db = psycopg2.connect(database_url)
   else:
     #database_url = "postgres://dbycbwdngelzjp:6769e3b8027bed07cc33198fb12db69330502f5788d8578284c7fcde25dca1e3@ec2-54-235-133-42.compute-1.amazonaws.com:5432/deeersqn3s60p0"
-    database_url = "postgres://kzwjrmmgnsjgsb:d0b2e456c5198435b22d2c59c76d97b2871e18f68c734f9b5489652a164fa59c@ec2-174-129-254-238.compute-1.amazonaws.com:5432/d25fp6m1mj11s9"
+    database_url = "postgres://nofsstwunlrjut:cb3a80b749c04b4055b5657bfe80e3eedf7e144aaf0ee0a0c6e5d1717d054ced@ec2-174-129-254-220.compute-1.amazonaws.com:5432/d517f20lof6uov"
     db = psycopg2.connect(database_url)
   return db
 
@@ -126,7 +126,7 @@ def result():
     DATABASE_URL = os.environ.get('DATABASE_URL')
     conn = create_engine(DATABASE_URL)
   else:
-    DATABASE_URL = "postgres://kzwjrmmgnsjgsb:d0b2e456c5198435b22d2c59c76d97b2871e18f68c734f9b5489652a164fa59c@ec2-174-129-254-238.compute-1.amazonaws.com:5432/d25fp6m1mj11s9"
+    DATABASE_URL = "postgres://nofsstwunlrjut:cb3a80b749c04b4055b5657bfe80e3eedf7e144aaf0ee0a0c6e5d1717d054ced@ec2-174-129-254-220.compute-1.amazonaws.com:5432/d517f20lof6uov"
     conn = create_engine(DATABASE_URL)
 
   user_dataframe.to_sql('user_info', conn, if_exists='append')
