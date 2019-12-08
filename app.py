@@ -10,7 +10,7 @@ import boto3
 import base64
 import os
 from clock import scheduled_email
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 app = Flask(__name__)
@@ -132,8 +132,27 @@ def result():
   user_dataframe.to_sql('user_info', conn, if_exists='append')
 
   #do the subscribe email sending
+  email_get, topic_get, df, time_get = scheduled_email()
+  hour = time_get[0:2]
+  minute = time_get[3:5]
 
-  scheduled_email()
+  def put():
+    print(1)
+
+  def email_send():
+    email_get, topic_get, df, time_get = scheduled_email()
+    requests.post(
+      "https://api.mailgun.net/v3/sandbox957dd76ef7654588999c5a5da5b13a00.mailgun.org/messages",
+      auth=("api", "8cd20346384403048d4c73a3a6fe6fdd-f7910792-af97a11e"),
+      data={"from": "Video Push Service <postmaster@sandbox957dd76ef7654588999c5a5da5b13a00.mailgun.org>",
+            "to": email_get,
+            "subject": "Videos Briefing on {}".format(topic_get),
+            "html": df.to_html(),
+           })
+
+  sched = BackgroundScheduler(timezone="EST")
+  sched.add_job(email_send, 'cron', day_of_week='mon-sun', hour=hour, minute=minute)
+  sched.start()
 
 
   return render_template("result.html", result = result)
